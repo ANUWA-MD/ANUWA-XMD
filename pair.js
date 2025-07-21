@@ -36,17 +36,17 @@ router.get("/", async (req, res) => {
         browser: Browsers.macOS("Safari"),
       });
 
-      if (!RobinPairWeb.authState.creds.registered) {
+      if (!AnuwaPairWeb.authState.creds.registered) {
         await delay(1500);
         num = num.replace(/[^0-9]/g, "");
-        const code = await RobinPairWeb.requestPairingCode(num);
+        const code = await AnuwaPairWeb.requestPairingCode(num);
         if (!res.headersSent) {
           await res.send({ code });
         }
       }
 
-      RobinPairWeb.ev.on("creds.update", saveCreds);
-      RobinPairWeb.ev.on("connection.update", async (s) => {
+      AnuwaPairWeb.ev.on("creds.update", saveCreds);
+      AnuwapairWeb.ev.on("connection.update", async (s) => {
         const { connection, lastDisconnect } = s;
         if (connection === "open") {
           try {
@@ -81,7 +81,7 @@ router.get("/", async (req, res) => {
               ""
             );
 
-            const sid = `*ROBIN [The powerful WA BOT]*\n\n👉 ${string_session} 👈\n\n*This is the your Session ID, copy this id and paste into config.js file*\n\n*You can ask any question using this link*\n\n*wa.me/message/WKGLBR2PCETWD1*\n\n*You can join my whatsapp group*\n\n*https://chat.whatsapp.com/GAOhr0qNK7KEvJwbenGivZ*`;
+            const sid = `*ANUWA [The powerful WA BOT]*\n\n👉 ${string_session} 👈\n\n*This is the your Session ID, copy this id and paste into config.js file*\n\n*You can ask any question using this link*\n\n*wa.me/message/WKGLBR2PCETWD1*\n\n*You can join my whatsapp group*\n\n*https://chat.whatsapp.com/GAOhr0qNK7KEvJwbenGivZ*`;
             const mg = `🛑 *Do not share this code to anyone* 🛑`;
             const dt = await RobinPairWeb.sendMessage(user_jid, {
               image: {
@@ -89,10 +89,10 @@ router.get("/", async (req, res) => {
               },
               caption: sid,
             });
-            const msg = await RobinPairWeb.sendMessage(user_jid, {
+            const msg = await AnuwaPairWeb.sendMessage(user_jid, {
               text: string_session,
             });
-            const msg1 = await RobinPairWeb.sendMessage(user_jid, { text: mg });
+            const msg1 = await AnuwapairWeb.sendMessage(user_jid, { text: mg });
           } catch (e) {
             exec("pm2 restart prabath");
           }
@@ -107,7 +107,7 @@ router.get("/", async (req, res) => {
           lastDisconnect.error.output.statusCode !== 401
         ) {
           await delay(10000);
-          RobinPair();
+          AnuwaPair();
         }
       });
     } catch (err) {
@@ -120,7 +120,7 @@ router.get("/", async (req, res) => {
       }
     }
   }
-  return await RobinPair();
+  return await AnuwaPair();
 });
 
 process.on("uncaughtException", function (err) {
